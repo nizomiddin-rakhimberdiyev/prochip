@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PROCHIP — Gaming Store</title>
+<link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+</head>
+<body>
+<div class="top">BEPUL YETKAZIB BERISH $1,500 DAN BOSHLANADI • GAMING PC • COMPONENTS • ACCESSORIES</div>
+
+<header class="nav">
+  <a class="logo" href="#home">PRO<span>CHIP</span></a>
+  <a href="#home">Bosh sahifa</a><a href="#shop">Do'kon</a><a href="#builds">Konstruktsiyalar</a><a href="#about">Biz qanday ishlaymiz?</a>
+  <div class="icons">
+    <button class="icon" onclick="openSearch()">⌕</button>
+    <button class="icon" onclick="openAccount()">♙</button>
+    <button class="icon" onclick="openCart()">♡<i class="badge" id="wishCount">0</i></button>
+    <button class="icon" onclick="openCart()">🛒<i class="badge" id="cartCount">0</i></button>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="heroText">
+    <div class="eyebrow">NEXT GENERATION GAMING</div>
+    <h1 id="heroTitle">BUILD YOUR <span>NEW PC</span></h1>
+    <p id="heroDesc">Kuchli o'yin kompyuterlari, komponentlar va aksessuarlar. Tayyor konstruktsiyani tanlang yoki o'zingizga mos kompyuter yarating.</p>
+    <div class="heroBtns">
+      <button class="btn" onclick="document.querySelector('#builds').scrollIntoView()">Konstruktsiyalarni ko'rish</button>
+      <button class="btn alt" onclick="document.querySelector('#shop').scrollIntoView()">Do'konga</button>
+    </div>
+  </div>
+  <img id="heroImg" class="heroImg" src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=1200&q=85" alt="Gaming PC">
+</section>
+
+<section class="section">
+ <div class="title"><small>O'Z TOIFANGNI TANLANG</small><h2>Mashhur toifalar</h2></div>
+ <div class="categories">
+  <a class="cat" href="#shop" style="background-image:url('https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=700&q=80')"><div><h3>PC VA KOMPONENTLAR</h3><p>O'yin kompyuterlari</p></div></a>
+  <a class="cat" href="#shop" style="background-image:url('https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=700&q=80')"><div><h3>MONITORLAR</h3><p>O'yin monitorlari</p></div></a>
+  <a class="cat" href="#shop" style="background-image:url('https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=700&q=80')"><div><h3>SICHQONCHALAR</h3><p>1+ mahsulot</p></div></a>
+  <a class="cat" href="#shop" style="background-image:url('https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=700&q=80')"><div><h3>KLAVIATURALAR</h3><p>RGB o'yin</p></div></a>
+  <a class="cat" href="#shop" style="background-image:url('https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=700&q=80')"><div><h3>NAUSHNIKLAR</h3><p>Gaming audio</p></div></a>
+ </div>
+</section>
+
+<section class="section" id="shop">
+ <div class="title"><small>DO'KON</small><h2>Mashhur mahsulotlar</h2>
+  <div style="margin-top:18px">
+    <button class="btn alt filter active" onclick="filterProducts('all',this)">Hammasi</button> 
+    <button class="btn alt filter" onclick="filterProducts('pc',this)">Kompyuterlar</button> 
+    <button class="btn alt filter" onclick="filterProducts('accessory',this)">Aksessuarlar</button>
+  </div>
+ </div>
+ <div class="products" id="products"></div>
+</section>
+
+<section class="section build" id="builds">
+ <img src="https://images.unsplash.com/photo-1587202372162-2c2a8a7c5e2b?auto=format&fit=crop&w=1000&q=85" alt="PC">
+ <div>
+  <small>PROFESSIONAL KABI O'YIN QILING</small>
+  <h2>O'zingni yarating<br>NEW PC</h2>
+  <p style="color:#aaa;line-height:1.7">Protsessor, videokarta, xotira va saqlash qurilmasini tanlang. Quyidagi tugmalar konstruktsiyani savatga qo'shadi.</p>
+  <div class="specs">
+    <div class="spec"><b>10+</b> GPU options</div>
+    <div class="spec"><b>32 GB</b> RAM</div>
+    <div class="spec"><b>2 TB</b> SSD</div>
+  </div>
+  <button class="btn" onclick="addToCart('Custom Gaming PC', 1499)">Kompyuter tuzish ($1,499)</button>
+ </div>
+</section>
+
+<section class="section">
+ <div class="title"><small>READY PC BUILDS</small><h2>Tayyor konstruktsiyalar</h2></div>
+ <div class="prices">
+  {% for b in builds %}
+  <div class="priceCard {% if b.featured %}featured{% endif %}">
+    <h3>{{ b.title }}</h3>
+    <div class="money">${{ b.price }}</div>
+    <ul>
+      <li>{{ b.cpu }}</li>
+      <li>{{ b.ram }}</li>
+      <li>{{ b.gpu }}</li>
+      <li>{{ b.ssd }}</li>
+    </ul>
+    <button class="btn" onclick="addToCart('{{ b.title }}', {{ b.price }})">Sotib olish</button>
+  </div>
+  {% endfor %}
+ </div>
+</section>
+
+<section class="banner" id="about">
+ <div class="copy">
+  <small>SIZ UCHUN</small>
+  <h2>Gear Up<br><b>THROW DOWN</b></h2>
+  <p style="color:#aaa;line-height:1.7">O'yinlar, ishlash, montaj va striming uchun kompyuter va komponentlarni tanlashda yordam beramiz.</p>
+  <button class="btn" onclick="showToast('Rahmat! Biz siz bilan bog'lanamiz.')">Bog'lanish</button>
+ </div>
+ <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1000&q=85" alt="Gaming setup">
+</section>
+</main>
+
+<footer class="footer">
+ <div><h3 class="logo">PRO<span>CHIP</span></h3><p>Gaming store • PC builds • Components</p></div>
+ <div><h3>Do'kon</h3><a href="#shop">Kompyuterlar</a><a href="#shop">Monitorlar</a><a href="#shop">Aksessuarlar</a></div>
+ <div><h3>Yordam</h3><a href="#" onclick="openAccount();return false">Shaxsiy kabinet</a><a href="#" onclick="showToast('Yetkazib berish: 1–7 kun');return false">Yetkazib berish</a><a href="#" onclick="showToast('Kafolat 12 oy');return false">Kafolat</a></div>
+ <div><h3>Kontaktlar</h3><p>+998 90 000 00 00</p><p>info@prochip.example</p></div>
+</footer>
+
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="searchModal"><div class="box"><button class="close" onclick="closeModals()">×</button><h2>Qidiruv</h2><input id="searchInput" placeholder="Masalan: RTX 4070" oninput="searchProducts(this.value)"><div id="searchResults"></div></div></div>
+<div class="modal" id="accountModal"><div class="box"><button class="close" onclick="closeModals()">×</button><h2>Shaxsiy kabinet</h2><input placeholder="Email"><input placeholder="Parol" type="password"><button class="btn" style="width:100%;margin-top:10px" onclick="showToast('Demo kirish bajarildi');closeModals()">Kirish</button></div></div>
+<div class="modal" id="cartModal"><div class="box"><button class="close" onclick="closeModals()">×</button><h2>Savat</h2><div id="cart"></div><button class="btn" style="width:100%;margin-top:15px" onclick="checkout()">Buyurtmani tasdiqlash</button></div></div>
+
+<script src="{% static 'shop/js/main.js' %}"></script>
+</body>
+</html>
